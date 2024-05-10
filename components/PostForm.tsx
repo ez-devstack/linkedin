@@ -14,12 +14,12 @@ function PostForm() {
     const ref = useRef<HTMLFormElement>(null);
     const [preview, setPreview] = useState<string | null>(null);
 
-    const handlePostAction = async (formData: FormData) => {
+    const handlePostAction = async (formData: FormData): Promise<void> => {
         const formDataCopy = formData;
         ref.current?.reset();
 
         const text = formDataCopy.get("postInput") as string;
-        if (!text.trim) {
+        if (!text) {
             throw new Error("Post input is required");
         }
 
@@ -48,6 +48,7 @@ function PostForm() {
 
                 //Toast notification on Promise above
             }} className="p-3 bg-white rounded-lg">
+                
                 <div className="flex items-center space-x-2">
                     <Avatar>
                         <AvatarImage src={user?.imageUrl} />
@@ -78,28 +79,25 @@ function PostForm() {
 
                 {/** Preview conditional check*/}
                 {preview && (
-                    <div className="mt-3">
+                    <div className="mt-2">
                         <img src={preview} alt="Preview" className="w-full object-cover" />
                     </div>
                 )}
 
                 <div className="flex justify-end mt-2 space-x-2">
-                    <Button type="button" onClick={() => fileInputRef.current?.click()}>
+                    <Button type="button" onClick={() => fileInputRef.current?.click()} variant={preview ? "secondary" : "outline"}>
                         <ImageIcon className="mr-2" size={16} color="currentColor" />
                         {preview ? "Change" : "Add"} image
                     </Button>
 
                     {/* Remove preview button */}
                     {preview && (
-                        <Button variant="outline" type="button" onClick={() => setPreview(null)}>
+                        <Button variant="outline" type="button" onClick={() => setPreview(null)} className="ml-2">
                             <XIcon className="mr-2" size={16} color="currentColor" />
                             Remove Image
                         </Button>
                     )}
                 </div>
-
-                {/** Image */}
-                {/** Post Button */}
             </form>
 
             <hr className="mt-2 border-gray-300" />

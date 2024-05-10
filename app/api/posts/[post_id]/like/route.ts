@@ -34,7 +34,6 @@ export async function POST(
     request: Request,
     { params }: { params: { post_id: string } }
 ) {
-    auth().protect();
     
     await connectDB();
 

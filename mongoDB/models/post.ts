@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, models, Model } from "mongoose";
 import { IUser } from "@/types/user";
-import { Comment, IComment, ICommentBase } from "@/types/comment";
+import { Comment, IComment, ICommentBase } from "./comment";
 
 
 export interface IPostBase {
@@ -20,7 +20,7 @@ export interface IPost extends Document, IPostBase {
 interface IPostMethods {
     likePost(userId: string): Promise<void>;
     unlikePost(userId: string): Promise<void>;
-    commentOnPost(comment: string): Promise<void>;
+    commentOnPost(comment: ICommentBase): Promise<void>;
     getAllComments(): Promise<IComment[]>;
     removePost(): Promise<void>;
 }
@@ -103,7 +103,9 @@ PostSchema.statics.getAllPosts = async function () {
         .populate({
             path: "comments",
             options: { sort: { createdAt: -1 } },
-        }).lean();
+        })
+        .populate("likes")
+        .lean();
 
         return posts.map((post: IPostDocument) => ({
             ...post,

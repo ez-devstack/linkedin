@@ -12,12 +12,12 @@ export interface AddPostRequestBody {
 
 
 export async function POST(request: Request) {
-    auth().protect();
+    // auth().protect();
+
+    const { user, text, imageUrl }: AddPostRequestBody = await request.json();
 
     try {
         await connectDB();
-
-        const { user, text, imageUrl }: AddPostRequestBody = await request.json();
 
         const postData: IPostBase = {
             user,
@@ -36,12 +36,12 @@ export async function POST(request: Request) {
     }
 }
 
-export async function GET(request: Request) {
+export async function GET() {
     try {
         await connectDB();
         
         const posts = await Post.getAllPosts();
-        return NextResponse.json({ posts });
+        return NextResponse.json(posts);
 
     } catch (error) {
         return NextResponse.json(

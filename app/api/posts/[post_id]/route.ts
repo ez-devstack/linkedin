@@ -26,16 +26,21 @@ export async function GET(
     }
 }
 
+export interface DeletePostRequestBody {
+    userId: string;
+}
+
+
 export async function DELETE (
     request: Request,
     { params }: { params: { post_id: string } }
  ) {
 
-    auth().protect();
-
-    const user = await currentUser();
+    // auth().protect();
 
     await connectDB();
+    const { userId }: DeletePostRequestBody = await request.json();
+
 
     try {
         const post = await Post.findById(params.post_id)
@@ -44,7 +49,7 @@ export async function DELETE (
             return NextResponse.json({ error: "Post not found" }, { status: 404 })
         }
 
-        if (post.user.userId !== user?.id) {
+        if (post.user.userId !== userId) {
             throw new Error("Post does not belong to user")
         }
 

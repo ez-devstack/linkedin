@@ -35,10 +35,10 @@ export interface AddCommentRequestBody {
 export async function POST(
     request: Request,
     { params }: { params: { post_id: string } }
-) {
-    await connectDB();
+) {    
     
     const { user, text }: AddCommentRequestBody = await request.json();
+    
     try {
         const post = await Post.findById(params.post_id);
 
