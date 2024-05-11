@@ -7,6 +7,7 @@ import { IUser } from "@/types/user";
 import { BlobServiceClient } from "@azure/storage-blob";
 import { currentUser } from "@clerk/nextjs/server";
 import { randomUUID } from "crypto";
+import { revalidatePath } from "next/cache";
 
 
 export default async function createPostAction(formData: FormData) {
@@ -75,6 +76,5 @@ export default async function createPostAction(formData: FormData) {
         throw new Error("Error when creating post", error);
     }
 
-
-    //revalidatePath '/' - home page
+    revalidatePath('/');
 }
