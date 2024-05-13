@@ -8,6 +8,8 @@ import ReactTimeago from "react-timeago";
 import { Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 import deletePostAction from "@/actions/deletePostAction";
+import Image from "next/image";
+import PostOptions from "./PostOptions";
 
 
 function Post({ post }: { post: IPostDocument }) {
@@ -51,7 +53,7 @@ function Post({ post }: { post: IPostDocument }) {
                         <Button variant="outline"
                             onClick={() => {
                                 const promise = deletePostAction(post._id);
-                                
+
                             }}
                         >
                             <Trash2 />
@@ -59,6 +61,23 @@ function Post({ post }: { post: IPostDocument }) {
                     )}
                 </div>
             </div>
+
+            <div>
+                <p className="px-4 pb-2 mt-2">{post.text}</p>
+
+                {post.imageUrl && (
+                    <Image
+                        src={post.imageUrl}
+                        alt="Post Image"
+                        width={300}
+                        height={300}
+                        className="w-full mx-auto"
+                    />
+                )}
+            </div>
+
+            
+            <PostOptions post={post} />
         </div >
     )
 }
