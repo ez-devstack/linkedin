@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import deletePostAction from "@/actions/deletePostAction";
 import Image from "next/image";
 import PostOptions from "./PostOptions";
+import { toast } from "sonner";
 
 
 function Post({ post }: { post: IPostDocument }) {
@@ -54,7 +55,12 @@ function Post({ post }: { post: IPostDocument }) {
                             onClick={() => {
                                 const promise = deletePostAction(post._id);
 
-                            }}
+                                toast.promise(promise, {
+                                    loading: "Deleting Post...",
+                                    success: "Post Deleted",
+                                    error: "Failed to delete post"
+                                });
+                                }}
                         >
                             <Trash2 />
                         </Button>
@@ -72,6 +78,7 @@ function Post({ post }: { post: IPostDocument }) {
                         width={300}
                         height={300}
                         className="w-full mx-auto"
+                        priority={true}
                     />
                 )}
             </div>
