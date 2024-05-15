@@ -4,6 +4,9 @@ import { Post } from "@/mongoDB/models/post";
 import { IUser } from "@/types/user";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 60
+
+
 export async function GET(
     request: Request,
     { params }: { params: { post_id: string } }
@@ -51,7 +54,7 @@ export async function POST(
             text,
         };
 
-        await post.commentOnPost(comment.text);
+        await post.commentOnPost(comment);
         return NextResponse.json({ message: "Comment added successfully" });
     } catch (error) {
         return NextResponse.json(

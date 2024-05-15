@@ -3,6 +3,9 @@ import { Post } from "@/mongoDB/models/post";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 60
+
+
 export async function GET(
     request: Request,
     { params }: { params: { post_id: string } }

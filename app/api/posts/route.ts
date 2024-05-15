@@ -9,7 +9,7 @@ export interface AddPostRequestBody {
     text: string;
     imageUrl?: string | null;
 }
-
+export const maxDuration = 60
 
 export async function POST(request: Request) {
     // auth().protect();

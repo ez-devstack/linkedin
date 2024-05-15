@@ -2,6 +2,9 @@ import connectDB from "@/mongoDB/db";
 import { Post } from "@/mongoDB/models/post";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 60
+
+
 export interface UnlikePostRequestBody {
   userId: string;
 }
